@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head><meta name='robots' content='none' /><base href="https://network-auth.com" />
+  <title> WS-Gast</title>
+
+  <style type="text/css" media="screen">
+    html { font-size: 100%;-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+form { margin: 0; }
+label { cursor: pointer; }
+button, input {
+  -webkit-appearance:none;
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+  line-height: normal;
+  *overflow: visible;
+}
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/* FIX: Geändert von #fff auf #1795E6, damit Standardlinks nicht "weiß auf weiß" unsichtbar sind */
+a, a:visited, a:active {color: #1795E6; text-decoration: none;}
+
+.hidden { display: none; }
+
+body {
+  margin: 0;
+  background: #eee;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4em;
+  font-family: georgia, palatino, serif;
+}
+
+h1, h2,  h3, p, a {
+  font-family: CiscoSans, helvetica, helvetica neue, verdana, tahoma, sans-serif;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 100;
+  line-height: 35px;
+  color: #555;
+  margin: 0 0 1em;
+}
+h2 {
+  font-size: 14px;
+  font-weight: normal;
+}
+h3 {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #888;
+}
+p{
+  color: #555;
+}
+
+.link_in_text a { color: #555 }
+
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 2em 0;
+  margin: 0 0 2em 0;
+}
+
+.header table { width: 100%; }
+#title_cell { vertical-align: bottom; }
+#icon_cell { text-align: center; }
+#icon_cell img {
+  max-width: 200px;
+  max-height: 100px;
+}
+
+#container {
+  max-width: 900px;
+  min-width: 300px;
+  margin: 0 auto;
+  background: #fff;
+  text-align: center;
+}
+
+#content {
+  background: #fff;
+}
+
+#continue {
+  padding: 2em;
+}
+
+#blocked {
+  padding: 2em;
+}
+
+#auth {
+  box-sizing: border-box;
+  padding: 0 1.5em 2em;
+}
+
+#left_col {
+  width: 100%;
+  margin-bottom: 3em;
+  text-align: left;
+}
+
+#right_col {
+  width: 100%;
+  text-align: left;
+  margin-top: 4em;
+  margin: 0 auto;
+}
+
+#account a {
+  color: #1795E6;
+  margin-right:  1em;
+  padding-right: 1em;
+  border-right: 1px solid #ccc;
+}
+
+#account a:hover {
+  color: #0876BD;
+}
+
+#account a:last-child {
+  border: none;
+}
+
+#sign_in {
+  background: #337c31;
+  color: #ffffff;
+  border-radius: 2px;
+  margin: 2.5em 0 1em;
+  padding: 1em;
+  box-sizing: border-box;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+}
+
+#sign_in:hover {
+  opacity: .85;
+}
+
+#blocked_msg {
+  text-align: center;
+  padding: 15px 0;
+}
+
+#claim_ap_msg {
+  text-align: center;
+  padding: 15px 0;
+}
+
+.formarea h3 {
+  line-height: 0;
+}
+
+.formarea input {
+  background: #eee;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: .7em;
+  width: 100%;
+}
+
+#email_field {
+  margin-bottom: 1.5em;
+}
+
+.button {
+  color: #ffffff !important; /* Erzwingt weißen Text auf dem grünen Button */
+  background: #337c31;
+  padding: 1em 2em;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 1em 0;
+}
+
+.button:hover {
+  opacity: .85;
+}
+
+/* FIX: Absolute Sichtbarkeit für die Links erzwingen */
+#forgot_password, .form_links {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#signin_form .form_links {
+  float: right;
+}
+
+#forgot_password a,
+.form_links a {
+  font-size: 14px; 
+  color: #1795E6 !important; /* Zwingt die Schriftfarbe zu sichtbarem Blau */
+  text-decoration: underline; 
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+#forgot_password a:hover,
+.form_links a:hover {
+  color: #0876BD;
+}
+
+#create_account_form h3 {
+  margin-top: 3em;
+}
+
+.footer {
+  width: 100%;
+  background: #eee;
+  border-top: 1px solid #ddd;
+  padding: 2em 0;
+  text-align: center;
+  display: inline-block;
+}
+
+.footer img {
+  margin: .5em 0;
+}
+
+.meraki_go_footer {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #ddd;
+  padding: 2em 0;
+  text-align: center;
+  display: inline-block;
+}
+
+.meraki_go_footer img {
+  margin: .5em 0;
+}
+
+.error {
+  background: #eee;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  margin: 3em 3em 0;
+  box-sizing: border-box;
+  padding: 0 .5em;
+}
+
+.error p {
+  color: #999;
+  font-size: 12px;
+}
+
+.login-error {
+  background: #ffdddd;
+  border-radius: 2px;
+  border: 1px solid #ffb8b8;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.login-error p {
+  color: #ff5959;
+  font-size: 12px;
+}
+
+.login-error img {
+  width: 11px;
+  margin: 5px 7px 0 0;
+}
+
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+.formarea input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 0px red; -webkit-box-shadow: 0px 0px 0px red; box-shadow: 0px 0px 0px red; }
+.formarea label.invalid {border: none; color: red; min-height: inherit; padding: 5px 0 0; margin: 0;}
+
+@media (min-width: 370px) {
+  #auth {
+    padding: 3em 3em 5em;
+  }
+  #left_col {
+    text-align: center;
+  }
+}
+
+@media (min-width: 550px) {
+  #auth {
+    padding: 3em 3em 5em;
+  }
+  #left_col {
+    width: 70%;
+    margin: 0 auto;
+    padding-bottom: 3em;
+    text-align: center;
+  }
+  #right_col {
+    width: 70%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 730px) {
+  #auth {
+    display: inline-block;
+    padding: 3em 3em 5em;
+  }
+  #left_col {
+    float: left;
+    text-align: left;
+    width: 50%;
+    padding-right: 3em;
+    box-sizing: border-box;
+  }
+  #right_col {
+    float: left;
+    width: 50%;
+    margin: 0;
+    padding-left: 3em;
+    box-sizing: border-box;
+  }
+}
+
+.GoSplash .header {
+  padding-top: 4em;
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.GoSplash #blocked {
+  padding-top: 1em;
+}
+
+.GoSplash .GoSplash__blockedIcon {
+  height: 8em;
+}
+
+.GoSplash .GoSplash__blockedIconLine--primary {
+  fill: #213A44;
+}
+
+.GoSplash .GoSplash__blockedIconLine--accent {
+  fill: #16E4D8;
+}
+
+.GoSplash h1 {
+  font-weight: 300;
+  color: #213A44;
+}
+
+.GoSplash p {
+  color: #666F77;
+}
+
+@media (max-width: 400px) {
+  .GoSplash .GoSplash__blockedIcon {
+    height: 6em;
+  }
+
+  .GoSplash .header {
+    padding-top: 2em;
+    padding-bottom: 0.5em;
+  }
+
+  .GoSplash h1 {
+    font-size: 24px;
+  }
+}
+
+  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1" >
+</head>
+
+<body>
+  <div id="content">
+    <div id="container">
+      <div class="header">
+        <div id="icon_cell"><img src='data:image/png;base64,/9j/4AAQSkZJRgABAQEAxwDHAAD/7gAOQWRvYmUAZAAAAAAC/9sAQwABAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgEBAgEBAQICAgIC
+AgICAgECAgICAgICAgIC/9sAQwEBAQEBAQEBAQEBAgEBAQICAgICAgICAgIC
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC/8AAFAgA
+ZABJBAERAAIRAQMRAQQRAP/EAB4AAAEDBQEBAAAAAAAAAAAAAAgFBwkAAwQG
+CgIB/8QAShAAAQQCAQMDAQUBCQoPAAAABAIDBQYBBwgAERIJEyEUFRYiMUFh
+FyMyOFFSd5G1GCQmMzdCgaG08Cc0NURTVFVxcnV2gqOxwf/EAB0BAAEEAwEB
+AAAAAAAAAAAAAAQAAwUGAQIJBwj/xABLEQACAQMSOEAdAnAMHwDkA4Y8MKpyr
+reyzJDbZlVu9aNiYag6vrNWrFnvmxT5Kr3OyFyFcgrhsmsOXccB+rRYRUHUP
+vLdHM21k8KtFAhkrzXr1eprVLSqtIJYJQWkld3WOMB0UBmSOUR8g5YSTdKDy
+FWlDMBqYtlsjuCTlqgxyuQEjVVZnJVmJUM8ZfHEApHzl8wIQgHXWXzy55XPh
+vadTBRWlQLnQbaHMzWyNt2y3XOpa71fGxduodWDjrTYqJqS3sa+IkRrhMHi
+WG85qVCa+5b8afbAzzhUI2W4emNuKGjL7M0686s2LHaz0Xp3elu+xrBIxhz
+MPtTUVV3DIQkYPLw6GTJSCrtrCUXh8kNZrXi/GskLUsZluHdFE7U6TQS071
+VRNTplQRyhmeAMcHIEjIeOAeJ7MR6lyWxVKrK8U0c6wRRytgkHEkaykAEdy
+vF9Vw2B6pyWxVKrK8U0c6wRRytgkHEkaykAEdyisM5IyO6g+g1Sj+rdouel
+9bQF31/uDWUptrkTvXjrSlTtZjZWOen9NbuuWjI6clyYiaUQDE2G00uRQFkY
+M5AD2FsSj47SNbAHdrPo97STKtAbP29q+jtmWvS8FBphH5S4SVph9xD7/ZZs
+FfjnxIteFRU9x6twRgR30T76UOGCZdDaZeLDk3jSFc0tHLOQk7NywgRoPh/K
+xy311qUZWXkB2BwxIUhNt1HICeoSIFogMZYsJet5gPL9UwsCDgn1Hb1ZC2+u
+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' />
+Willkommen zu WS-Gast
+Liebe Schülerinnen, Schüler und Gäste der WSW,
+mit der Bestätigung erklärt Ihr Euch einverstanden, das WLAN der WSW nur für schulische Zwecke zu verwenden. Es ist verboten,  gewaltverherrlichende, pornografische, rassistische, diskriminierende, rechts- oder linksextreme Inhalte oder Inhalte, die gegen die Würde des Menschen oder allgemein gegen die verfassungsrechtliche Grundordnung der Bundesrepublik Deutschland verstoßen, aufzurufen oder dergleichen Inhalte zu verbreiten.
+Die WSW behält sich vor, unter Beachtung der datenschutzrechtlichen Bestimmungen, Logins und aufgerufene Seiten zu loggen.
+<a class="button" href="network-auth.com" onclick = "javascript:(function(continue_button) {
+if (continue_button != null) {
+if (continue_button.disabled) {
+return;
+}
+var enable = function(continue_button) {
+continue_button.disabled = true;
+};
+setTimeout(enable, 60000, continue_button);
+continue_button.disabled = true;
+}
+var _request = new XMLHttpRequest();
+var url = 'network-auth.com';
+_request.open('HEAD', window.location, true);
+_request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+_request.onreadystatechange = function() {
+if (_request.readyState === 4) {
+var continue_url = _request.getResponseHeader('Continue-Url');
+window.location.href = url.replace('CONTINUE_URL_PLACEHOLDER', continue_url);
+};
+};
+_request.send(null);
+})(this); return false;" title="Continue to the Internet">Zum Internet fortfahren
+
+
+
+POWERED BY
+
+
+function getButtonContainer() {
+return document.getElementsByClassName('color_button')[0];
+}
+function getButton() {
+return document.getElementsByClassName('btn')[0] || document.getElementsByClassName('button')[0];
+}
+function disableButton(button) {
+/* Deaktiviert, damit der Button nicht blockiert wird */
+// button.disabled = true;
+}
+function enableButton(button) {
+button.disabled = false;
+if (button.nodeName == 'A') {
+button.style.pointerEvents = 'auto';
+} else if (button.nodeName == 'INPUT') {
+button.style.cursor = 'auto';
+}
+}
+function handleClick(elem) {
+var button = getButton();
+if (elem.checked) {
+enableButton(button)
+} else {
+/* Deaktiviert, damit das Abwählen des Hakens den Button nicht wieder sperrt */
+// disableButton(button);
+}
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+var buttonContainer = getButtonContainer();
+var button = getButton();
+/* FIX: enableButton statt disableButton aufrufen, damit der Button sofort klickbar ist */
+enableButton(button);
+var gdprConsent = document.createElement('div');
+var consentMsg = "Ich bestätige, das ich dich Hasse, und die Bestimmungen gelesen zu haben und diese einzuhalten.";
+var consentHTML = 'Sie müssen dem Folgenden zustimmen, um auf das Internet zuzugreifen.' +
+'' +
+/* FIX: "checked" Attribut direkt hinzugefügt, damit die Checkbox standardmäßig aktiv ist */
+'' +
+'' +
+'' + consentMsg + '' +
+'' +
+'';
+gdprConsent.innerHTML = consentHTML;
+if (buttonContainer) {
+buttonContainer.parentNode.insertBefore(gdprConsent, buttonContainer);
+} else {
+button.parentNode.insertBefore(gdprConsent, button);
+}
+});
+function disable_subsequent_click() {
+var sign_in_button = document.getElementById('sign_in') || document.getElementById('submit_button');
+if (sign_in_button != null) {
+setTimeout('sign_in_button.disabled = false;', 60000);
+sign_in_button.disabled = true;
+}
+return true;
+}
+function update_form_action_from_headers(form) {
+disable_subsequent_click();
+var _request = new XMLHttpRequest();
+var url = 'network-auth.com';
+_request.open('HEAD', window.location, true);
+_request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+_request.onreadystatechange = function() {
+if (_request.readyState === 4) {
+var continue_url = _request.getResponseHeader('Continue-Url');
+form.action = url.replace('CONTINUE_URL_PLACEHOLDER', continue_url);
+form.submit();
+}
+}
+_request.send(null);
+return false;
+}
+
